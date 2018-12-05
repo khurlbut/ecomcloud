@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-home
+  namespace: ecom
+  labels:
+    app: ecom
+data:
+  config.json: | 
+    {
+      "IPAddress": "127.0.0.1",
+      "Port": "8080",
+      "Pages": [ 
+          {"Path":"/browse/home.do","Status": 200,"Body":"HOME","Cookies":["unknownShopperId:unknownShopperId"]}
+      ]
+    }
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: home
+  namespace: ecom
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ecom-home
+        version: v1
+    spec:
+      containers:
+      - name: home
+        image: khurlbut/fakeserver:v1
+        imagePullPolicy: Always #IfNotPresent
+        command:
+        - fakeserver
+        - --config-file=/config/config.json
+        volumeMounts:
+          - name: config
+            mountPath: /config
+        ports:
+        - containerPort: 8080
+      volumes:
+      - name: config
+        configMap:
+          name: "config-home"   

@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: virtualservice-home
+spec:
+  hosts:
+  - "*"
+  gateways:
+   - gateway-home
+  http:
+  - match:
+    - uri:
+        exact: /
+    - uri:
+         prefix: /browse/home.do
+    rewrite:
+      uri: "/browse/home.do"
+    route:
+     - destination:
+         host: service-home.ecom.svc.cluster.local
+         port:
+           number: 8080
+

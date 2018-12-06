@@ -19,7 +19,6 @@ var _ = BeforeSuite(func() {
 	KubeCtlApply("./yaml/fakes/pages/home.yaml")
 	KubeCtlApply("./yaml/fakes/services/user-segmenter.yaml")
 	KubeCtlApply("./yaml/app/networking/service-home.yaml")
-	KubeCtlApply("./yaml/app/networking/service-cookie-setter.yaml")
 	KubeCtlApply("./yaml/app/networking/service-user-segmenter.yaml")
 	KubeCtlApply("./yaml/app/networking/virtual-service-home.yaml")
 	KubeCtlApply("./yaml/app/networking/gateway-home.yaml")

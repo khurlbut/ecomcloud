@@ -9,6 +9,7 @@ spec:
    - gateway-home
   http:
 
+  # location '/browse/home.do' with cookies initialized
   - match:
     - headers:
         cookie:
@@ -18,9 +19,8 @@ spec:
     route:
      - destination:
          host: service-home.ecom.svc.cluster.local
-         port:
-           number: 8080
 
+  # location '/' with cookies initialized
   - match:
     - headers:
         cookie:
@@ -32,10 +32,8 @@ spec:
     route:
      - destination:
          host: service-home.ecom.svc.cluster.local
-         port:
-           number: 8080
+
+  # cookies not initialized 
   - route:
       - destination:
           host: service-user-segmenter.ecom.svc.cluster.local
-          port:
-            number: 8080

@@ -40,7 +40,7 @@ var _ = Describe("Ecom Home Page Tests", func() {
 		Ω(string(body)).Should(Equal("USER-SEGMENTER"))
 	})
 
-	It("should be able to find the unknownShopperId cookie when other cookies are present", func() {
+	It("should find the unknownShopperId cookie when other cookies are present", func() {
 		client := &http.Client{}
 		req := newRequest("GET", "http://13.66.226.127/")
 
@@ -56,8 +56,7 @@ var _ = Describe("Ecom Home Page Tests", func() {
 
 		body, _ := ioutil.ReadAll(res.Body)
 
-		Ω(res.StatusCode).Should(Equal(200))
-		Ω(string(body)).Should(Equal("HOME"))
+		validate(res.StatusCode, body, err)
 	})
 
 })

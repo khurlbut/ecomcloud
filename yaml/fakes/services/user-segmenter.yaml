@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-user-segmenter
+  namespace: ecom
+  labels:
+    app: ecom
+data:
+  config.json: | 
+    {
+      "IPAddress": "127.0.0.1",
+      "Port": "8080",
+      "Pages": [ 
+          {"Path":"/", "Status": 200, "Body":"USER-SEGMENTER"},
+          {"Path":"/browse/home.do", "Status": 200, "Body":"USER-SEGMENTER"},
+          {"Path":"/blahblahblah", "Status": 200, "Body":"USER-SEGMENTER"},
+          {"Path":"/asdfasdf", "Status": 200, "Body":"USER-SEGMENTER"}
+      ]
+    }
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: user-segmenter
+  namespace: ecom
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ecom-user-segmenter
+        version: v1
+    spec:
+      containers:
+      - name: user-segmenter
+        image: khurlbut/fakeserver:v1
+        imagePullPolicy: Always #IfNotPresent
+        command:
+        - fakeserver
+        - --config-file=/config/config.json
+        volumeMounts:
+          - name: config
+            mountPath: /config
+        ports:
+        - containerPort: 8080
+      volumes:
+      - name: config
+        configMap:
+          name: "config-user-segmenter"   

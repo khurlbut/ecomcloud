@@ -36,6 +36,6 @@ spec:
            number: 8080
   - route:
       - destination:
-          host: service-cookie-setter.ecom.svc.cluster.local
+          host: service-user-segmenter.ecom.svc.cluster.local
           port:
             number: 8080

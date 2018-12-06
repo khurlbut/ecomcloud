@@ -11,7 +11,7 @@ data:
       "IPAddress": "127.0.0.1",
       "Port": "8080",
       "Pages": [ 
-          {"Path":"/browse/home.do","Status": 200,"Body":"HOME","Cookies":["unknownShopperId:unknownShopperId"]}
+          {"Path":"/browse/home.do","Status": 200,"Body":"HOME","Headers":["someheader:value"],"Cookies":["unknownShopperId:unknownShopperId"]}
       ]
     }
 ---

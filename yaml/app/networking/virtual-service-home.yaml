@@ -19,6 +19,8 @@ spec:
     route:
      - destination:
          host: service-home.ecom.svc.cluster.local
+    appendHeaders:
+        'Someheader': 'value' 
 
   # location '/' with cookies initialized
   - match:
@@ -32,6 +34,8 @@ spec:
     route:
      - destination:
          host: service-home.ecom.svc.cluster.local
+    appendHeaders:
+        'Someheader': 'value' 
 
   # cookies not initialized 
   - route:

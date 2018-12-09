@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: config-user-segmenter
+  name: config-segmenter
   namespace: ecom
   labels:
     app: ecom
@@ -9,25 +9,30 @@ data:
   config.json: | 
     {
       "IPAddress": "127.0.0.1",
-      "Port": "3000",
-      "Pages": [ {"Path":"*", "Status": 200, "Body":"USER-SEGMENTER"} ]
+      "Port": "8080",
+      "Pages": [ {
+                    "Path":"*", 
+                    "Status": 200, 
+                    "Body": "{\"%s\": [{\"allBrandsAllPages\":\"components\"}]}",
+                    "InjectionKeys": ["path"]
+      } ]
     }
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: user-segmenter
+  name: segmenter
   namespace: ecom
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: ecom-user-segmenter
+        app: ecom-segmenter
         version: v1
     spec:
       containers:
-      - name: user-segmenter
+      - name: segmenter
         image: khurlbut/fakeserver:v1
         imagePullPolicy: Always #IfNotPresent
         command:
@@ -37,8 +42,8 @@ spec:
           - name: config
             mountPath: /config
         ports:
-        - containerPort: 3000
+        - containerPort: 8080
       volumes:
       - name: config
         configMap:
-          name: "config-user-segmenter"   
+          name: "config-segmenter"   

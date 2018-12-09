@@ -41,3 +41,5 @@ spec:
   - route:
       - destination:
           host: service-user-segmenter.ecom.svc.cluster.local
+    appendHeaders:
+        'request-host': 'www.kube.athleta.gap.com'

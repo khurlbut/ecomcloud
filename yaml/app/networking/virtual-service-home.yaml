@@ -18,7 +18,7 @@ spec:
           prefix: /browse/home.do
     route:
      - destination:
-         host: service-home.ecom.svc.cluster.local
+         host: service-browse-controller.ecom.svc.cluster.local
     appendHeaders:
         'Someheader': 'value' 
 
@@ -33,7 +33,7 @@ spec:
       uri: /browse/home.do
     route:
       - destination:
-          host: service-home.ecom.svc.cluster.local
+          host: service-browse-controller.ecom.svc.cluster.local
     appendHeaders:
         'Someheader': 'value' 
 
@@ -42,7 +42,7 @@ spec:
           exact: /favicon.ico
     route:
       - destination:
-          host: service-home.ecom.svc.cluster.local
+          host: service-browse-controller.ecom.svc.cluster.local
 
   # cookies not initialized 
   - route:

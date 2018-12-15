@@ -13,8 +13,8 @@ data:
       "Pages": [ {
                     "Path":"*", 
                     "Status": 200, 
-                    "Body": "{\"%s\": [{\"allBrandsAllPages\":\"components\"}]}",
-                    "InjectionKeys": ["path"]
+                    "InjectionKeys": ["path"],
+                    "Body": "{\"%s\": [{\"allBrandsAllPages\":\"components\"}]}"
       } ]
     }
 ---

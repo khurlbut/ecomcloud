@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: browse-controller
+  namespace: ecom
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ecom-browse-controller
+        version: v1
+    spec:
+      containers:
+      - name: browse-controller
+        image: khurlbut/browse-controller:v1
+        env:
+        - name: NEW_RELIC_NO_CONFIG_FILE
+          value: "true"
+        - name: NEW_RELIC_ENABLED 
+          value: "false"
+        - name: ENV
+          value: "prod"
+        - name: NODE_ENV
+          value: "production"
+        - name: OPTIMIZELY_DATA_FILE
+          value: "https://cdn.optimizely.com/json/8226728373.json"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "64Mi"
+            cpu: "250m"
+        imagePullPolicy: Always #IfNotPresent
+        command: ["npm"]
+        args: ["run", "start"]
+        ports:
+        - containerPort: 3000

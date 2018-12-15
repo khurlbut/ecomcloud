@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-optimizely-cdn
+  namespace: ecom
+  labels:
+    app: ecom
+data:
+  config.json: |
+    {
+      "IPAddress": "127.0.0.1",
+      "Port": "8080",
+      "Pages": [ {
+                    "Path":"*", 
+                    "Status": 200, 
+                    "Body": "{\"version\":\"4\",\"rollouts\":[{\"experiments\":[{\"status\":\"Running\",\"key\":\"10376265377\",\"layerId\":\"10365823985\",\"trafficAllocation\":[{\"entityId\":\"10405172289\",\"endOfRange\":1000}],\"audienceIds\":[],\"variations\":[{\"variables\":[],\"id\":\"10405172289\",\"key\":\"10405172289\",\"featureEnabled\":true}],\"forcedVariations\":{},\"id\":\"10376265377\"}],\"id\":\"10365823985\"},{\"experiments\":[{\"status\":\"Running\",\"key\":\"10375219562\",\"layerId\":\"10430320335\",\"trafficAllocation\":[{\"entityId\":\"10425700157\",\"endOfRange\":0}],\"audienceIds\":[],\"variations\":[{\"variables\":[],\"id\":\"10425700157\",\"key\":\"10425700157\",\"featureEnabled\":true}],\"forcedVariations\":{},\"id\":\"10375219562\"}],\"id\":\"10430320335\"},{\"experiments\":[{\"status\":\"Running\",\"key\":\"11344221866\",\"layerId\":\"11332551781\",\"trafficAllocation\":[{\"entityId\":\"11337200420\",\"endOfRange\":10000}],\"audienceIds\":[\"11300011320\"],\"variations\":[{\"variables\":[],\"id\":\"11337200420\",\"key\":\"11337200420\",\"featureEnabled\":true}],\"forcedVariations\":{},\"id\":\"11344221866\"}],\"id\":\"11332551781\"},{\"experiments\":[{\"status\":\"Running\",\"key\":\"11707420998\",\"layerId\":\"11705771120\",\"trafficAllocation\":[{\"entityId\":\"11716790617\",\"endOfRange\":10000}],\"audienceIds\":[],\"variations\":[{\"variables\":[{\"id\":\"11789924390\",\"value\":\"handlebars\"},{\"id\":\"11921650769\",\"value\":\"components\"}],\"id\":\"11716790617\",\"key\":\"11716790617\",\"featureEnabled\":true}],\"forcedVariations\":{},\"id\":\"11707420998\"}],\"id\":\"11705771120\"},{\"experiments\":[{\"status\":\"Notstarted\",\"key\":\"11701692136\",\"layerId\":\"11739161740\",\"trafficAllocation\":[{\"entityId\":\"11713312743\",\"endOfRange\":0}],\"audienceIds\":[],\"variations\":[{\"variables\":[],\"id\":\"11713312743\",\"key\":\"11713312743\",\"featureEnabled\":false}],\"forcedVariations\":{},\"id\":\"11701692136\"}],\"id\":\"11739161740\"}],\"typedAudiences\":[],\"anonymizeIP\":false,\"projectId\":\"8226728373\",\"variables\":[],\"featureFlags\":[{\"experimentIds\":[],\"rolloutId\":\"10365823985\",\"variables\":[],\"id\":\"10387842067\",\"key\":\"search-server-side\"},{\"experimentIds\":[],\"rolloutId\":\"10430320335\",\"variables\":[],\"id\":\"10415851053\",\"key\":\"navigation-components\"},{\"experimentIds\":[],\"rolloutId\":\"11332551781\",\"variables\":[],\"id\":\"11321540883\",\"key\":\"test_java_vendor_feature\"},{\"experimentIds\":[],\"rolloutId\":\"11705771120\",\"variables\":[{\"defaultValue\":\"handlebars\",\"type\":\"string\",\"id\":\"11789924390\",\"key\":\"1061290\"},{\"defaultValue\":\"components\",\"type\":\"string\",\"id\":\"11921650769\",\"key\":\"1027697\"}],\"id\":\"11728390395\",\"key\":\"category_routing_overrides\"},{\"experimentIds\":[],\"rolloutId\":\"11739161740\",\"variables\":[],\"id\":\"11729461811\",\"key\":\"breadcrumbs\"}],\"experiments\":[{\"status\":\"Running\",\"key\":\"allBrandsAllPages\",\"layerId\":\"11786060310\",\"trafficAllocation\":[{\"entityId\":\"11810441079\",\"endOfRange\":1000},{\"entityId\":\"11810441079\",\"endOfRange\":2000},{\"entityId\":\"11810441079\",\"endOfRange\":7500},{\"entityId\":\"11810441079\",\"endOfRange\":10000}],\"audienceIds\":[],\"variations\":[{\"variables\":[],\"id\":\"11810441079\",\"key\":\"components\"},{\"variables\":[],\"id\":\"11824180557\",\"key\":\"handlebars\"}],\"forcedVariations\":{},\"id\":\"11795251168\"}],\"audiences\":[{\"id\":\"11300011320\",\"conditions\":\"[\"and\",[\"or\",[\"or\",{\"name\":\"Developer\",\"type\":\"custom_attribute\",\"value\":\"true\"}]]]\",\"name\":\"Developer\"}],\"groups\":[],\"attributes\":[{\"id\":\"8467744075\",\"key\":\"device\"},{\"id\":\"8468226335\",\"key\":\"ad_source\"},{\"id\":\"8481111182\",\"key\":\"brand\"},{\"id\":\"8550613428\",\"key\":\"user-agent\"},{\"id\":\"8558135872\",\"key\":\"Mobile\"},{\"id\":\"10316718723\",\"key\":\"tealium_badges\"},{\"id\":\"11124695406\",\"key\":\"Platform_or_OS\"},{\"id\":\"11337190469\",\"key\":\"Developer\"},{\"id\":\"11789796416\",\"key\":\"isiPhone\"},{\"id\":\"11789964722\",\"key\":\"isDesktop\"},{\"id\":\"11797523591\",\"key\":\"isAndroid\"},{\"id\":\"11814204225\",\"key\":\"isIE\"},{\"id\":\"11816184383\",\"key\":\"isMobile\"}],\"botFiltering\":false,\"accountId\":\"6529002483\",\"events\":[{\"experimentIds\":[],\"id\":\"8234940248\",\"key\":\"CONVERSION\"},{\"experimentIds\":[],\"id\":\"8265911895\",\"key\":\"BONUS_CASH_CONVERSION\"},{\"experimentIds\":[],\"id\":\"8566490704\",\"key\":\"ORDER_REVIEW\"},{\"experimentIds\":[],\"id\":\"8568145081\",\"key\":\"ShoppingBag\"},{\"experimentIds\":[],\"id\":\"8570320630\",\"key\":\"OrderConfirmation\"},{\"experimentIds\":[],\"id\":\"8577401426\",\"key\":\"Checkout\"}],\"revision\":\"400\"}"
+      } ]
+    }
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: optimizely-cdn
+  namespace: ecom
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ecom-optimizely-cdn
+        version: v1
+    spec:
+      containers:
+      - name: optimizely-cdn
+        image: khurlbut/fakeserver:v1
+        imagePullPolicy: Always #IfNotPresent
+        command:
+        - fakeserver
+        - --config-file=/config/config.json
+        volumeMounts:
+          - name: config
+            mountPath: /config
+        ports:
+        - containerPort: 8080
+      volumes:
+      - name: config
+        configMap:
+          name: "config-optimizely-cdn"   

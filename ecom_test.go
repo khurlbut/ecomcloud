@@ -32,7 +32,7 @@ var _ = Describe("Ecom Home Page Tests", func() {
 		validate(statusCode, body, err)
 	})
 
-	It("should go to USER-SEGMENTE on unknownShopperId cookie is not found", func() {
+	It("should go to USER-SEGMENTER on unknownShopperId cookie is not found", func() {
 		statusCode, body, err := executeRequest("http://13.66.226.127/browse/home.do/", nil)
 		Ω(err).ShouldNot(HaveOccurred())
 

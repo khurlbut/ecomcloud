@@ -24,7 +24,7 @@ spec:
         - name: NODE_ENV
           value: "production"
         - name: OPTIMIZELY_DATA_FILE
-          value: "https://cdn.optimizely.com/json/8226728373.json"
+          value: "http://service-optimizely-cdn.ecom.svc.cluster.local:8080/json/822678373.json"
         resources:
           requests:
             memory: "64Mi"

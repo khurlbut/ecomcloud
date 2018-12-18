@@ -15,12 +15,14 @@ spec:
       - name: browse-controller
         image: khurlbut/browse-controller:v1
         env:
+        - name: HOSTING_PROVIDER
+          value: "azure"
         - name: NEW_RELIC_NO_CONFIG_FILE
           value: "true"
         - name: NEW_RELIC_ENABLED 
           value: "false"
         - name: ENV
-          value: "prod"
+          value: "k8s"
         - name: NODE_ENV
           value: "production"
         - name: OPTIMIZELY_DATA_FILE
